@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sda-demo", "sda-demo\sda-demo.csproj", "{728C88C0-E831-451B-8BEC-6BAB23FC0C39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostApp", "HostApp\HostApp.csproj", "{ADA32460-B5F0-474F-92C7-9682F669800C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDEHostApp", "IDEHostApp\IDEHostApp.csproj", "{3DAFB47B-5CFA-4006-8524-A096EB5AC282}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -17,6 +21,14 @@ Global
 		{728C88C0-E831-451B-8BEC-6BAB23FC0C39}.Debug|x86.Build.0 = Debug|x86
 		{728C88C0-E831-451B-8BEC-6BAB23FC0C39}.Release|x86.ActiveCfg = Release|x86
 		{728C88C0-E831-451B-8BEC-6BAB23FC0C39}.Release|x86.Build.0 = Release|x86
+		{ADA32460-B5F0-474F-92C7-9682F669800C}.Debug|x86.ActiveCfg = Debug|x86
+		{ADA32460-B5F0-474F-92C7-9682F669800C}.Debug|x86.Build.0 = Debug|x86
+		{ADA32460-B5F0-474F-92C7-9682F669800C}.Release|x86.ActiveCfg = Release|x86
+		{ADA32460-B5F0-474F-92C7-9682F669800C}.Release|x86.Build.0 = Release|x86
+		{3DAFB47B-5CFA-4006-8524-A096EB5AC282}.Debug|x86.ActiveCfg = Debug|x86
+		{3DAFB47B-5CFA-4006-8524-A096EB5AC282}.Debug|x86.Build.0 = Debug|x86
+		{3DAFB47B-5CFA-4006-8524-A096EB5AC282}.Release|x86.ActiveCfg = Release|x86
+		{3DAFB47B-5CFA-4006-8524-A096EB5AC282}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

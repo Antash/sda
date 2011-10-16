@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{728C88C0-E831-451B-8BEC-6BAB23FC0C39}</ProjectGuid>
+    <ProjectGuid>{ADA32460-B5F0-474F-92C7-9682F669800C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sda_demo</RootNamespace>
-    <AssemblyName>sda-demo</AssemblyName>
+    <RootNamespace>HostApp</RootNamespace>
+    <AssemblyName>HostApp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

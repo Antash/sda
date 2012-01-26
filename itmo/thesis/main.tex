@@ -1,5 +1,119 @@
-\documentclass{article}
+\documentclass[12pt,a4paper,oneside]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage[english,russian]{babel}
+\usepackage{extsizes} % чтобы можно было использовать шрифты больше, чем 12pt
+\usepackage{pscyr} % красивые русскоязычные шрифты (мануал по установке тут: http://ishutov.blogspot.com/2011/02/miktex-29-pscyr-04d.html)
+\usepackage{xcolor}
+%\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{url}
+
+\usepackage{indentfirst}
+
+% для математических символов
+\usepackage{amsmath, amsthm, amssymb}
+
+% для построения диаграмм
+%\usepackage{tikz}
+%\usetikzlibrary{positioning,arrows,shapes,shadows}
+
+\graphicspath{{pics/}}
+
+% поля (в соответствии с Требованиями Оформления Магистерских Работ)
+% по умолчанию левое и верхнее и левое поле = 1дюйм (2.54 см). Это соответствует требованиям.
+\oddsidemargin = 0mm
+\topmargin = -15mm % вычитается размер колонтитула.
+\textwidth = 175mm
+\textheight = 247mm
+
+% абзацный отступ
+\parindent = 12mm
+
+\sloppy
+\makeatletter
+\renewcommand{\baselinestretch}{1.5} % межстрочный интервал
+
+% чтобы каждая новая глава начиналась с новой страницы
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+\pagestyle{plain}
+
+%\newcounter{appendix_number}
+%\newcommand{\Appendix}[1]{\addtocounter{appendix_number}{1} \section{Приложение \arabic{appendix_number}. #1}}
+
+% замена в подписи к рисунку разделителя ":" на "." (Рис. 2: Рисунок   станет   Рис. 2. Рисунок.) - - - - - - - - -
+\renewcommand{\@makecaption}[2]{%
+\vspace{\abovecaptionskip}%
+\sbox{\@tempboxa}{#1: #2}
+\ifdim \wd\@tempboxa >\hsize
+#1: #2\par
+\else
+\global\@minipagefalse
+\hbox to \hsize {\hfil #1. #2\hfil}%
+\fi
+\vspace{\belowcaptionskip}}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+% оформление заголовков глав
+ \def\onelineskip{\normalsize\vskip\baselineskip}
+
+ \renewcommand{\@makechapterhead}[1]{%
+ {\raggedright
+ \parindent=0cm\hangafter=1%
+ \newbox\numberbox
+ \setbox\numberbox\hbox{\normalfont\LARGE\textar{\bfseries\thechapter.\hskip0.5em}}%
+ \hangindent=\wd\numberbox %
+ \normalfont\LARGE\textar{\@chapapp{}\bfseries
+ \unhbox\numberbox #1}\par
+ \nopagebreak
+ \onelineskip
+ }}
+
+ \renewcommand{\@makeschapterhead}[1]{%
+ {\parindent=0pt \raggedright
+ \normalfont\LARGE\textar{\bfseries #1}\par
+ \nopagebreak
+ \onelineskip
+ }}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+
+
+
 
 \begin{document}
-	Hello, world
+    %\renewcommand{\@oddhead}{\hfill \thepage \hfill} % номера страниц по центру сверху
+    \renewcommand{\thesection}{\arabic{section}}
+    \renewcommand{\bibname}{Источники}
+    
+    \newcommand{\TODO}[1]{\fcolorbox{red}{red}{TODO :: #1}}
+    \newcommand{\Definition}[1]{{\bf Определение. } #1 \par} % TODO :: Добавить счётчик
+   
+    \setcounter{page}{5}   % номер первой страницы
+	
+    %\tableofcontents
+    %\pagebreak
+    
+    
+	% ---------  Основные главы -----------------------------------
+	Ебал я эту магистерскую.
+	% -------------------------------------------------------------
+    
+    
+    % Библиография.
+    % Как описано здесь: http://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
+    % TODO :: Установить требуемый Правилами стиль библиографии.
+    %\bibliographystyle{unsrt} % в порядке упоминания в тексте
+    %\cleardoublepage                           % !!!!! TODO :: такое решение сработает вроде как не всегда, иногда будет пустая страница !!!!!
+    %\addcontentsline{toc}{section}{Источники} % !!!!! TODO :: это баг!!!!!!! литература начнётся с новой страницы !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    %\bibliography{references}
+    
+    %\appendix
+    
 \end{document}

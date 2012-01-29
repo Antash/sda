@@ -52,6 +52,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,10 +78,6 @@
     <ProjectReference Include="..\ExtIntegration\ExtIntegration.csproj">
       <Project>{BE25229B-2E2D-48B7-A8B7-BA80CA69B46B}</Project>
       <Name>ExtIntegration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IDEHostApp\IDEHostApp.csproj">
-      <Project>{A34258DE-538C-4BAD-A4E7-B0D2C43E6DE9}</Project>
-      <Name>IDEHostApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

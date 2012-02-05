@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using ICSharpCode.SharpDevelop.Sda;
 using Microsoft.Win32;
+using PipeServices;
 
 namespace IDEHostApplication
 {
@@ -24,13 +25,14 @@ namespace IDEHostApplication
 		{
 			workbenchIsRunning = false;
 
-			Init();
+			InitVariables();
+			ConfigureEnviorenment();
 		}
 
 		/// <summary>
 		/// Preparing IDE host enviorenment
 		/// </summary>
-		private void Init()
+		private void InitVariables()
 		{
 			string sdBase;
 			// get #D installation path from registry (TODO AA : works with 3.0 only!)
@@ -48,8 +50,6 @@ namespace IDEHostApplication
 			_sdDataDir = Path.Combine(_sdRootDir, "data");
 			_sdAddInDir = Path.Combine(_sdRootDir, "AddIns");
 			_sdBinDir = Path.Combine(_sdRootDir, "bin");
-
-			ConfigureEnviorenment();
 		}
 
 		private void ConfigureEnviorenment()

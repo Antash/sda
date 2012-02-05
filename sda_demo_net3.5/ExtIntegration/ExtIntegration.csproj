@@ -63,11 +63,12 @@
   <ItemGroup>
     <Compile Include="IDEHostIntegration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SDAServiceCallback.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IDEHostApp\IDEHostApp.csproj">
-      <Project>{A34258DE-538C-4BAD-A4E7-B0D2C43E6DE9}</Project>
-      <Name>IDEHostApp</Name>
+    <ProjectReference Include="..\PipeServices\PipeServices.csproj">
+      <Project>{C207AB6A-49E7-4FF5-A499-ADAC13639ACC}</Project>
+      <Name>PipeServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

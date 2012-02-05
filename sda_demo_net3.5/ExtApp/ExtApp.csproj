@@ -94,6 +94,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExtIntegration\ExtIntegration.csproj">
+      <Project>{BE25229B-2E2D-48B7-A8B7-BA80CA69B46B}</Project>
+      <Name>ExtIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PipeServices\PipeServices.csproj">
+      <Project>{C207AB6A-49E7-4FF5-A499-ADAC13639ACC}</Project>
+      <Name>PipeServices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using PipeServices;
+using CommunicationServices;
 
 namespace IDEHostApplication
 {
@@ -21,7 +21,7 @@ namespace IDEHostApplication
 
 			Guid = args[0];
 
-			var comminicationService = new WCFCommunicationService();
+			SDIntegration.Instance.Foo();
 
 			Application.Run(new ApplicationContext());
 		}

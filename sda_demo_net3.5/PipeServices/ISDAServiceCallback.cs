@@ -1,6 +1,6 @@
 ﻿using System.ServiceModel;
 
-namespace PipeServices
+namespace CommunicationServices
 {
 	/// <summary>
 	/// Interface declares service contract for WCF communication between IDEHost and ITM.

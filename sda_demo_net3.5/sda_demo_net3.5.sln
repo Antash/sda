@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtIntegration", "ExtIntegr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtIntegrationUI", "ExtIntegrationUI\ExtIntegrationUI.csproj", "{3FF82C3A-831C-49F1-B14C-09FBED2DD683}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeServices", "PipeServices\PipeServices.csproj", "{C207AB6A-49E7-4FF5-A499-ADAC13639ACC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationServices", "PipeServices\CommunicationServices.csproj", "{C207AB6A-49E7-4FF5-A499-ADAC13639ACC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDEHostApplication", "IDEHostApplication\IDEHostApplication.csproj", "{14A84F9A-72A4-4E29-8750-6F362C566153}"
 EndProject

@@ -8,8 +8,8 @@
     <ProjectGuid>{C207AB6A-49E7-4FF5-A499-ADAC13639ACC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PipeServices</RootNamespace>
-    <AssemblyName>PipeServices</AssemblyName>
+    <RootNamespace>CommunicationServices</RootNamespace>
+    <AssemblyName>CommunicationServices</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -60,11 +60,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SDAService.cs" />
     <Compile Include="ISDAServiceCallback.cs" />
     <Compile Include="ISDAServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SDASideServiceEntry.cs" />
+    <Compile Include="CommunicationService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

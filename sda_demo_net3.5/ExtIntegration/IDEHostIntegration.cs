@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows.Forms;
-using PipeServices;
+using CommunicationServices;
 
 namespace ExtIntegration
 {
@@ -59,7 +59,7 @@ namespace ExtIntegration
 		{
 			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None) { ReceiveTimeout = TimeSpan.FromHours(42), SendTimeout = TimeSpan.FromHours(42) };
 
-			var endpoint = new EndpointAddress(WCFCommunicationService.address);
+			var endpoint = new EndpointAddress(CommunicationService.Address);
 
 			var factory = new ChannelFactory<ISDAService>(binding, endpoint);
 
@@ -79,7 +79,7 @@ namespace ExtIntegration
 		{
 			var callbackHost = new ServiceHost(typeof(SDAServiceCallback));
 			var callbackbinding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None) { ReceiveTimeout = TimeSpan.FromHours(42), SendTimeout = TimeSpan.FromHours(42) };
-			callbackHost.AddServiceEndpoint(typeof(ISDAServiceCallback), callbackbinding, WCFCommunicationService.callbackAddress);
+			callbackHost.AddServiceEndpoint(typeof(ISDAServiceCallback), callbackbinding, CommunicationService.CallbackAddress);
 			callbackHost.Open();
 		}
 

@@ -1,4 +1,4 @@
-﻿using PipeServices;
+﻿using CommunicationServices;
 
 namespace ExtIntegration
 {

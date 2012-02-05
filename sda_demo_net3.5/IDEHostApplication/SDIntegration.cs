@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.ServiceModel;
+using CommunicationServices;
 using ICSharpCode.SharpDevelop.Sda;
 using Microsoft.Win32;
-using PipeServices;
 
 namespace IDEHostApplication
 {
@@ -19,19 +20,52 @@ namespace IDEHostApplication
 		private WorkbenchSettings _workbenchSettings;
 		private SharpDevelopHost _sdHost;
 		private StartupSettings _startupSettings;
-		private bool workbenchIsRunning;
+		private bool _workbenchIsRunning;
 
-		public SDIntegration()
+		#region Singletone definition
+
+		private static volatile SDIntegration _instance;
+		private static readonly object SyncRoot = new Object();
+
+		public static SDIntegration Instance
 		{
-			workbenchIsRunning = false;
+			get
+			{
+				if (_instance == null)
+				{
+					lock (SyncRoot)
+					{
+						if (_instance == null)
+							_instance = new SDIntegration();
+					}
+				}
 
+				return _instance;
+			}
+		}
+
+		#endregion
+
+		#region Initialization
+
+		private SDIntegration()
+		{
+			_workbenchIsRunning = false;
+
+			InitCommunicationService();
 			InitVariables();
 			ConfigureEnviorenment();
 		}
 
-		/// <summary>
-		/// Preparing IDE host enviorenment
-		/// </summary>
+		private void InitCommunicationService()
+		{
+			var host = new ServiceHost(typeof (SDAService));
+			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None)
+			              	{ReceiveTimeout = TimeSpan.FromHours(42), SendTimeout = TimeSpan.FromHours(42)};
+			host.AddServiceEndpoint(typeof (ISDAService), binding, CommunicationService.Address);
+			host.Open();
+		}
+
 		private void InitVariables()
 		{
 			string sdBase;
@@ -74,18 +108,49 @@ namespace IDEHostApplication
 
 			_sdHost = new SharpDevelopHost(AppDomain.CurrentDomain, _startupSettings);
 			_workbenchSettings = new WorkbenchSettings();
+
+			assignHandlers();
 		}
 
-		private void RunWorkbench()
+		private void assignHandlers()
 		{
-			if (!workbenchIsRunning)
-				System.Threading.ThreadPool.QueueUserWorkItem(ThreadedRun);
+			_sdHost.BeforeRunWorkbench +=new EventHandler(_sdHost_BeforeRunWorkbench);
+			_sdHost.WorkbenchClosed += new EventHandler(_sdHost_WorkbenchClosed);
+			_sdHost.SolutionLoaded += new EventHandler(_sdHost_SolutionLoaded);
+			_sdHost.StartBuild += new EventHandler(_sdHost_StartBuild);
+			_sdHost.EndBuild += new EventHandler(_sdHost_EndBuild);
 		}
 
-		private void ThreadedRun(object state)
+		#endregion	
+
+		#region SharpDevelopHost event handlers
+
+		void _sdHost_EndBuild(object sender, EventArgs e)
 		{
-			_sdHost.RunWorkbench(_workbenchSettings);
+			// TODO AA : implement
 		}
+
+		void _sdHost_StartBuild(object sender, EventArgs e)
+		{
+			// TODO AA : implement
+		}
+
+		void _sdHost_SolutionLoaded(object sender, EventArgs e)
+		{
+			// TODO AA : implement
+		}
+
+		void _sdHost_WorkbenchClosed(object sender, EventArgs e)
+		{
+			_workbenchIsRunning = false;
+		}
+
+		void _sdHost_BeforeRunWorkbench(object sender, EventArgs e)
+		{
+			_workbenchIsRunning = true;
+		}
+
+		#endregion
 
 		/* 
 		 * This code is needed to load references from correct place
@@ -94,7 +159,7 @@ namespace IDEHostApplication
 		 *		-binaries
 		 *		-addins
 		 */
-		#region asembly resolving
+		#region Assembly resolving
 
 		private static Assembly LoadAssemlbyFromProductInstallationFolder(object sender, ResolveEventArgs args)
 		{
@@ -150,5 +215,44 @@ namespace IDEHostApplication
 
 		#endregion
 
+		private void RunWorkbench()
+		{
+			if (!_workbenchIsRunning)
+				System.Threading.ThreadPool.QueueUserWorkItem(ThreadedRun);
+		}
+
+		private void ThreadedRun(object state)
+		{
+			_sdHost.RunWorkbench(_workbenchSettings);
+		}
+
+		public void OpenProject(string fileName)
+		{
+			if (!_sdHost.IsSolutionOrProject(fileName))
+			{
+				CommunicationService.SdaCallback.ProjectOpenError();
+				return;
+			}
+			//isLoadingProjectSuccess = false;
+
+			if (!_workbenchIsRunning)
+			{
+				_workbenchSettings.InitialFileList.Clear();
+				_workbenchSettings.InitialFileList.Add(fileName);
+				RunWorkbench();
+				//loadingProjectTimer.Start();
+			}
+			else
+			{
+				//loadingProjectTimer.Start();
+				_sdHost.OpenProject(fileName);
+			}
+
+			//lastProjectOpened = filename;
+		}
+
+		public void Foo()
+		{
+		}
 	}
 }

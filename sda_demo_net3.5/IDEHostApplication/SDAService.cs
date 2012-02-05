@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
+﻿using System.ServiceModel;
+using CommunicationServices;
+using System.Windows.Forms;
 
-namespace PipeServices
+namespace IDEHostApplication
 {
 	/// <summary>
 	/// Implementation of service.
@@ -29,6 +27,7 @@ namespace PipeServices
 		/// <param name="projectFileName">Path to project\solution file</param>
 		public void OpenProject(string projectFileName)
 		{
+			SDIntegration.Instance.OpenProject(projectFileName);
 		}
 
 		/// <summary>
@@ -72,9 +71,8 @@ namespace PipeServices
 		/// </summary>
 		public void Shutdown()
 		{
-
+			Application.Exit();
 		}
-
 
 		/// <summary>
 		/// Stops the debugging process
@@ -82,7 +80,6 @@ namespace PipeServices
 		public void StopDebugging()
 		{
 		}
-
 
 		/// <summary>
 		/// Processes all existed breakpoints

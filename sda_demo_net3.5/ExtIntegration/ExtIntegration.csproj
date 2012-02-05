@@ -66,9 +66,9 @@
     <Compile Include="SDAServiceCallback.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PipeServices\PipeServices.csproj">
+    <ProjectReference Include="..\PipeServices\CommunicationServices.csproj">
       <Project>{C207AB6A-49E7-4FF5-A499-ADAC13639ACC}</Project>
-      <Name>PipeServices</Name>
+      <Name>CommunicationServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

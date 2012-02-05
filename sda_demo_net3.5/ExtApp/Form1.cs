@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ExtIntegration;
 
 namespace ExtApp
 {
@@ -18,7 +19,7 @@ namespace ExtApp
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-
+			IDEHostIntegration.Instance.Manipulator.ShowIDE();
 		}
 	}
 }

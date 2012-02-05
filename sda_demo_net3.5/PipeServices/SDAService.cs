@@ -29,45 +29,27 @@ namespace PipeServices
 		/// <param name="projectFileName">Path to project\solution file</param>
 		public void OpenProject(string projectFileName)
 		{
-			Console.WriteLine("Command from pipe: OpenProject({0})", projectFileName);
-			SDIntegration.Instance.suppressBuild = false;
-			SDIntegration.InvokeDelegateVS inv = SDIntegration.Instance.OpenProject;
-			inv.Invoke(projectFileName);
 		}
-
 
 		/// <summary>
 		/// Invokes build process
 		/// </summary>
 		public void Build()
 		{
-			Console.WriteLine("Command from pipe: Build()");
-			SDIntegration.InvokeDelegateV inv = SDIntegration.Instance.RunBuild;
-			inv.Invoke();
 		}
-
 
 		/// <summary>
 		/// Makes SharpDevelop IDE visible
 		/// </summary>
 		public void ShowIDE()
 		{
-			Console.WriteLine("Command from pipe: ShowIDE()");
-
-			SDIntegration.InvokeDelegateV inv = SDIntegration.Instance.ShowIDE;
-			inv.Invoke();
 		}
-
 
 		/// <summary>
 		/// Closes currently opened solution in SharpDevelop IDE
 		/// </summary>
 		public void CloseWorkbench()
 		{
-			Console.WriteLine("Command from pipe: CloseSolution()");
-
-			SDIntegration.InvokeDelegateV inv = SDIntegration.Instance.CloseIDE;
-			inv.Invoke();
 		}
 
 		/// <summary>
@@ -75,7 +57,6 @@ namespace PipeServices
 		/// </summary>
 		public void CloseProject()
 		{
-			SDIntegration.Instance.CloseProject();
 		}
 
 		/// <summary>
@@ -83,7 +64,7 @@ namespace PipeServices
 		/// </summary>
 		public bool IsReadyToOpenProject()
 		{
-			return SDIntegration.Instance.IsReadyToOpenProject();
+			return false;
 		}
 
 		/// <summary>
@@ -91,10 +72,7 @@ namespace PipeServices
 		/// </summary>
 		public void Shutdown()
 		{
-			Console.WriteLine("Command from pipe: Shutdown()");
 
-			SDIntegration.InvokeDelegateV inv = Application.Exit;
-			inv.Invoke();
 		}
 
 
@@ -103,10 +81,6 @@ namespace PipeServices
 		/// </summary>
 		public void StopDebugging()
 		{
-			Console.WriteLine("Command from pipe: StopDebugging()");
-
-			SDIntegration.InvokeDelegateV inv = SDIntegration.Instance.StopDebugger;
-			inv.Invoke();
 		}
 
 
@@ -115,7 +89,6 @@ namespace PipeServices
 		/// </summary>
 		public void ReinitBreakpoints()
 		{
-			SDIntegration.Instance.ReinitBreakpoints();
 		}
 
 		/// <summary>
@@ -123,7 +96,7 @@ namespace PipeServices
 		/// </summary>
 		public bool IsAttached()
 		{
-			return SDIntegration.Instance.IsAttached();
+			return true;
 		}
 
 		/// <summary>
@@ -131,9 +104,7 @@ namespace PipeServices
 		/// </summary>
 		public void AfterProjectSaving()
 		{
-			StateHolder.Instance.PState = StateHolder.SDAProjectState.ReadyToOpen;
 		}
-
 
 		/// <summary>
 		/// Updates signatures information for "Event-handlers signatures generator wizard"
@@ -141,14 +112,6 @@ namespace PipeServices
 		/// <param name="templateAssemblyPath"></param>
 		public void UpdateEvHandlersGeneratorCache(string templateAssemblyPath)
 		{
-			try
-			{
-				EventHandlersGenerator.HandlerSignatureCollection.Instance.Initialize(templateAssemblyPath);
-			}
-			catch (Exception err)
-			{
-				MessageBox.Show("Event handler generation wizard failed to update its cache\n\n" + err.Message, "SDA Integration", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
 		}
 	}
 }

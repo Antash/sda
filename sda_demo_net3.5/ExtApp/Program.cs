@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using ExtIntegration;
 
 namespace ExtApp
 {
@@ -13,6 +14,8 @@ namespace ExtApp
 		[STAThread]
 		static void Main()
 		{
+			IDEHostIntegration.Instance.foo();
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Form1());

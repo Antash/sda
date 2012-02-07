@@ -69,18 +69,21 @@ namespace IDEHostApplication
 		private void InitVariables()
 		{
 			string sdBase;
-			// get #D installation path from registry (TODO AA : works with 3.0 only!)
-			var sdKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\SharpDevelop.exe");
-			if (sdKey != null)
-			{
-				sdBase = (string)sdKey.GetValue("");
-			}
-			else
-			{
-				throw new Exception("no #D installation!");
-			}
+			// get #D installation path from registry
+			//var sdKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\SharpDevelop.exe");
+			//if (sdKey != null)
+			//{
+			//    sdBase = (string)sdKey.GetValue("");
+			//}
+			//else
+			//{
+			//    throw new Exception("no #D installation!");
+			//}
+			// TODO AA : remove hardcode!
+			sdBase = @"C:\Program Files (x86)\SharpDevelop\3.0";
 
-			_sdRootDir = Path.GetDirectoryName(Path.GetDirectoryName(sdBase).TrimEnd('\\'));
+			//_sdRootDir = Path.GetDirectoryName(Path.GetDirectoryName(sdBase).TrimEnd('\\'));
+			_sdRootDir = sdBase;
 			_sdDataDir = Path.Combine(_sdRootDir, "data");
 			_sdAddInDir = Path.Combine(_sdRootDir, "AddIns");
 			_sdBinDir = Path.Combine(_sdRootDir, "bin");

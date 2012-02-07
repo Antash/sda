@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.ServiceModel;
 using System.Windows.Forms;
 using CommunicationServices;
@@ -34,6 +35,7 @@ namespace ExtIntegration
 			}
 		}
 
+		private const string IDEHostApplicationName = "IDEHostApplication.exe";
 		private Process _ideHostProcess;
 
 		private void StartIDEHost()
@@ -41,9 +43,8 @@ namespace ExtIntegration
 			if (_ideHostProcess != null && !_ideHostProcess.HasExited)
 				_ideHostProcess.Kill();
 
-			//TODO AA : remove hardcode
-			const string p = @"C:\Users\anton\Documents\Visual Studio 2010\Projects\sda_demo\sda_demo_net3.5\IDEHostApplication\bin\Debug\IDEHostApplication.exe";
-			var ideHostStartInfo = new ProcessStartInfo(p) { UseShellExecute = false, Arguments = Guid.NewGuid().ToString() };
+			var ideHostStartupPath = Path.Combine(Application.StartupPath, IDEHostApplicationName);
+			var ideHostStartInfo = new ProcessStartInfo(ideHostStartupPath) { UseShellExecute = false, Arguments = Guid.NewGuid().ToString() };
 
 			_ideHostProcess = Process.Start(ideHostStartInfo);
 

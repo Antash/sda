@@ -7,7 +7,8 @@ namespace IDEHostApplication
 {
 	internal static class Program
 	{
-		public static string Guid;
+		// TODO AA : review guid usage
+		public static string AppGuid;
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -19,7 +20,8 @@ namespace IDEHostApplication
 			if (args.Length == 0)
 				return;
 
-			Guid = args[0];
+			AppGuid = args[0];
+			var cs = new CommunicationService(AppGuid);
 
 			SDIntegration.Instance.Foo();
 

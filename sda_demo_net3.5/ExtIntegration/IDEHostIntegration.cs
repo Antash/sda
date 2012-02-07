@@ -15,6 +15,7 @@ namespace ExtIntegration
 
 		private IDEHostIntegration()
 		{
+			_guid = Guid.NewGuid().ToString();
 			StartIDEHost();
 			IDEHostCommunicationInit();
 		}
@@ -44,7 +45,11 @@ namespace ExtIntegration
 				_ideHostProcess.Kill();
 
 			var ideHostStartupPath = Path.Combine(Application.StartupPath, IDEHostApplicationName);
-			var ideHostStartInfo = new ProcessStartInfo(ideHostStartupPath) { UseShellExecute = false, Arguments = Guid.NewGuid().ToString() };
+			var ideHostStartInfo = new ProcessStartInfo(ideHostStartupPath)
+			                       	{
+			                       		UseShellExecute = false,
+										Arguments = _guid
+			                       	};
 
 			_ideHostProcess = Process.Start(ideHostStartInfo);
 
@@ -58,9 +63,13 @@ namespace ExtIntegration
 
 		private void IDEHostCommunicationInit()
 		{
-			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None) { ReceiveTimeout = TimeSpan.FromHours(42), SendTimeout = TimeSpan.FromHours(42) };
+			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None)
+			              	{
+			              		ReceiveTimeout = TimeSpan.FromHours(42), 
+								SendTimeout = TimeSpan.FromHours(42)
+			              	};
 
-			var endpoint = new EndpointAddress(CommunicationService.Address);
+			var endpoint = new EndpointAddress(String.Format(CommunicationService.AddressTemplate, _guid));
 
 			var factory = new ChannelFactory<ISDAService>(binding, endpoint);
 
@@ -75,12 +84,17 @@ namespace ExtIntegration
 		}
 
 		private ISDAService _sdaManipulator;
+		private string _guid;
 
 		public void InitCallbackPipe()
 		{
 			var callbackHost = new ServiceHost(typeof(SDAServiceCallback));
-			var callbackbinding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None) { ReceiveTimeout = TimeSpan.FromHours(42), SendTimeout = TimeSpan.FromHours(42) };
-			callbackHost.AddServiceEndpoint(typeof(ISDAServiceCallback), callbackbinding, CommunicationService.CallbackAddress);
+			var callbackbinding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None)
+			                      	{
+			                      		ReceiveTimeout = TimeSpan.FromHours(42), 
+										SendTimeout = TimeSpan.FromHours(42)
+			                      	};
+			callbackHost.AddServiceEndpoint(typeof(ISDAServiceCallback), callbackbinding, String.Format(CommunicationService.CallbackAddressTemplate, _guid));
 			callbackHost.Open();
 		}
 

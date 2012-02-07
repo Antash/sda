@@ -61,8 +61,11 @@ namespace IDEHostApplication
 		{
 			var host = new ServiceHost(typeof (SDAService));
 			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None)
-			              	{ReceiveTimeout = TimeSpan.FromHours(42), SendTimeout = TimeSpan.FromHours(42)};
-			host.AddServiceEndpoint(typeof (ISDAService), binding, CommunicationService.Address);
+			              	{
+								ReceiveTimeout = TimeSpan.FromHours(42), 
+								SendTimeout = TimeSpan.FromHours(42)
+							};
+			host.AddServiceEndpoint(typeof(ISDAService), binding, String.Format(CommunicationService.AddressTemplate ,Program.AppGuid));
 			host.Open();
 		}
 

@@ -25,6 +25,7 @@ namespace IDEHostApplication
 		{
 			Dirty,
 			Clean,
+			Invalid,
 			Closed
 		}
 
@@ -41,6 +42,12 @@ namespace IDEHostApplication
 			Running,
 			Paused,
 		}
+
+		private IDEHostApplicationState _ideHostAppState;
+		private SDWorkbenchWindowState _sdWorkbenchWindowState;
+		private ProjectState _projectState;
+		private ProjectBuildState _projectBuildState;
+		private ProjectExecutionState _projectExecutionState;
 
 		private static volatile StateHolder _instance;
 		private static readonly object SyncRoot = new Object();

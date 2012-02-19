@@ -20,11 +20,10 @@ namespace IDEHostApplication
 		private WorkbenchSettings _workbenchSettings;
 		private SharpDevelopHost _sdHost;
 		private StartupSettings _startupSettings;
-		private bool _workbenchIsRunning;
 
 		#region Singletone definition
 
-		private static volatile SDIntegration _instance;
+		private static volatile SDIntegration _instance = new SDIntegration();
 		private static readonly object SyncRoot = new Object();
 
 		public static SDIntegration Instance
@@ -50,11 +49,13 @@ namespace IDEHostApplication
 
 		private SDIntegration()
 		{
-			_workbenchIsRunning = false;
+			StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Initializing);
 
 			InitCommunicationService();
 			InitVariables();
 			ConfigureEnviorenment();
+
+			StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Initialized);
 		}
 
 		private void InitCommunicationService()
@@ -83,7 +84,8 @@ namespace IDEHostApplication
 			//    throw new Exception("no #D installation!");
 			//}
 			// TODO AA : remove hardcode!
-			sdBase = @"C:\Program Files (x86)\SharpDevelop\3.0";
+			//sdBase = @"C:\Program Files (x86)\SharpDevelop\3.0";
+			sdBase = @"C:\Program Files\SharpDevelop\3.0";
 
 			//_sdRootDir = Path.GetDirectoryName(Path.GetDirectoryName(sdBase).TrimEnd('\\'));
 			_sdRootDir = sdBase;
@@ -120,7 +122,6 @@ namespace IDEHostApplication
 
 		private void assignHandlers()
 		{
-			_sdHost.BeforeRunWorkbench +=new EventHandler(_sdHost_BeforeRunWorkbench);
 			_sdHost.WorkbenchClosed += new EventHandler(_sdHost_WorkbenchClosed);
 			_sdHost.SolutionLoaded += new EventHandler(_sdHost_SolutionLoaded);
 			_sdHost.StartBuild += new EventHandler(_sdHost_StartBuild);
@@ -148,12 +149,7 @@ namespace IDEHostApplication
 
 		void _sdHost_WorkbenchClosed(object sender, EventArgs e)
 		{
-			_workbenchIsRunning = false;
-		}
-
-		void _sdHost_BeforeRunWorkbench(object sender, EventArgs e)
-		{
-			_workbenchIsRunning = true;
+			StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Suspended);
 		}
 
 		#endregion
@@ -223,13 +219,8 @@ namespace IDEHostApplication
 
 		private void RunWorkbench()
 		{
-			if (!_workbenchIsRunning)
-				System.Threading.ThreadPool.QueueUserWorkItem(ThreadedRun);
-		}
-
-		private void ThreadedRun(object state)
-		{
-			_sdHost.RunWorkbench(_workbenchSettings);
+			if (StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Running))
+				System.Threading.ThreadPool.QueueUserWorkItem(state => _sdHost.RunWorkbench(_workbenchSettings));
 		}
 
 		public void OpenProject(string fileName)
@@ -255,10 +246,6 @@ namespace IDEHostApplication
 			}
 
 			//lastProjectOpened = filename;
-		}
-
-		public void Foo()
-		{
 		}
 	}
 }

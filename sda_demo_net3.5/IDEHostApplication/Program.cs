@@ -23,8 +23,6 @@ namespace IDEHostApplication
 			AppGuid = args[0];
 			var cs = new CommunicationService(AppGuid);
 
-			SDIntegration.Instance.Foo();
-
 			Application.Run(new ApplicationContext());
 		}
 	}

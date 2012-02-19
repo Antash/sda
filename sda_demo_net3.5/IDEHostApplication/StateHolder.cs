@@ -4,16 +4,18 @@ namespace IDEHostApplication
 {
 	internal class StateHolder
 	{
-		enum IDEHostApplicationState
+		internal enum IDEHostApplicationStates
 		{
-			Suspended,
+			NotInitialized,
 			Initializing,
+			Initialized,
 			Running,
 			Suspending,
+			Suspended,
 			Fault
 		}
 
-		enum SDWorkbenchWindowState
+		internal enum SDWorkbenchWindowStates
 		{
 			Closed,
 			Opened,
@@ -21,7 +23,7 @@ namespace IDEHostApplication
 			Hiden
 		}
 
-		enum ProjectState
+		internal enum ProjectStates
 		{
 			Dirty,
 			Clean,
@@ -29,27 +31,30 @@ namespace IDEHostApplication
 			Closed
 		}
 
-		enum ProjectBuildState
+		internal enum ProjectBuildStates
 		{
 			NotBuilded,
+			Building,
 			Succeded,
 			Fault
 		}
 
-		enum ProjectExecutionState
+		internal enum ProjectExecutionStates
 		{
 			Stopped,
 			Running,
 			Paused,
 		}
 
-		private IDEHostApplicationState _ideHostAppState;
-		private SDWorkbenchWindowState _sdWorkbenchWindowState;
-		private ProjectState _projectState;
-		private ProjectBuildState _projectBuildState;
-		private ProjectExecutionState _projectExecutionState;
+		private IDEHostApplicationStates _ideHostAppState;
+		private SDWorkbenchWindowStates _sdWorkbenchWindowState;
+		private ProjectStates _projectState;
+		private ProjectBuildStates _projectBuildState;
+		private ProjectExecutionStates _projectExecutionState;
 
-		private static volatile StateHolder _instance;
+		private string _lastProjectOpened;
+
+		private static volatile StateHolder _instance = new StateHolder();
 		private static readonly object SyncRoot = new Object();
 
 		public static StateHolder Instance
@@ -67,6 +72,29 @@ namespace IDEHostApplication
 
 				return _instance;
 			}
+		}
+
+		protected StateHolder()
+		{
+			_lastProjectOpened = null;
+			_ideHostAppState = IDEHostApplicationStates.NotInitialized;
+			_sdWorkbenchWindowState = SDWorkbenchWindowStates.Closed;
+			_projectState = ProjectStates.Closed;
+			_projectBuildState = ProjectBuildStates.NotBuilded;
+			_projectExecutionState = ProjectExecutionStates.Stopped;
+		}
+
+		public bool ChangeIDEHostApplicationState(IDEHostApplicationStates newState)
+		{
+			switch (newState)
+			{
+				case IDEHostApplicationStates.Running:
+					if (_ideHostAppState != IDEHostApplicationStates.Initialized)
+						return false;
+					break;
+			}
+			_ideHostAppState = newState;
+			return true;
 		}
 	}
 }

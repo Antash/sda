@@ -1,1 +1,11 @@
 \subsubsection{Plux.NET}
+
+Plux.NET is a plug-in platform for .NET which allows you to build extensible applications consisting of an ultra-thin core and a set of extensions that can be plugged into designated slots of the core or other extensions at run time.
+
+Plux.NET uses the metaphor of slots and extensions. A slot specifies a contract for extending a piece of software (called the host), and an extension is a plug-in component (i.e. a .NET assembly) that fills a slot. In essence, a slot declares the kind of information a host expects and extensions provide this information.
+
+In its simplest form, a slot declares an interface as well as a list of parameters with their names and types. An extension provides a class implementing this interface as well as a list of values for the parameters. The host will rely on these parameters to load and integrate the extension. Slots and extensions are specified using .NET attributes.
+
+Let's assume that our host is an application with a graphical user interface that allows menu commands to be installed as extensions. It opens a slot specifying an interface IMenuItem as well as two parameters: Text (for the name of the menu item) and Icon (for the icon to be used in the menu item). An extension is a class implementing IMenuItem. It also provides values for the parameters, e.g. "Print" for the Text parameter and "Print.gif" for the Icon parameter.
+
+For every open slot the platform detects available extensions, loads them, assigns the parameter values to the parameters and notifies the host that owns this slot. The host can then take actions for integrating the extension, e.g., by inserting a new menu item into its menus and linking it to the extension class.

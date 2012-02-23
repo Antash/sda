@@ -1,1 +1,15 @@
-\subsubsection{Mono.AddIns, System.AddIns}
+\subsubsection{Mono.AddIns, System.AddIn}
+
+Mono.Addins is a generic framework for creating extensible applications, and for creating add-ins which extend those applications. This framework has been designed to be useful for a wide range of applications: from simple applications with small extensibility needs, to complex applications which need support for large add-in structures.
+
+The main features of Mono.Addins are:
+Supports descriptions of add-ins using custom attributes (for simple and common extensions) or using XML manifests (for more complex extensibility needs).
+Supports extension metadata and data-only extensions.
+Support for add-in hierarchies, where add-ins may depend on other add-ins.
+Lazy loading of add-ins.
+Dynamic activation / deactivation of add-ins at run time.
+Allows sharing add-in registries between applications, and defining arbitrary add-in locations.
+Allows implementing extensible libraries.
+Supports add-in localization.
+Provides an API for accessing to add-in descriptions, which will allow building development and documentation tools for handling add-ins.
+In addition to the basic add-in engine, it provides a Setup library to be used by applications which want to offer basic add-in management features to users, such as enabling/disabling add-ins, or installing add-ins from on-line repositories.

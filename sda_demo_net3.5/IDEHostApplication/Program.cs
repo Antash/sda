@@ -15,13 +15,13 @@ namespace IDEHostApplication
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			//Debugger.Launch();
+			Debugger.Launch();
 
 			if (args.Length == 0)
 				return;
 
 			AppGuid = args[0];
-			var cs = new CommunicationService(AppGuid);
+			new CommunicationService(AppGuid);
 
 			SDIntegration.Instance.foo();
 
@@ -61,7 +61,7 @@ namespace IDEHostApplication
 				try
 				{
 					// remove all addin assemblies from isolated storage
-					//IsolatedStorageService.ClearStorage();
+					IsolatedStorageService.ClearStorage();
 
 					// close SharpDevelop IDE
 					SDIntegration.Instance.CloseIDE();

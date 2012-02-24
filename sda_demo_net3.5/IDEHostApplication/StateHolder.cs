@@ -97,6 +97,7 @@ namespace IDEHostApplication
 		public ProjectStates ProjectState
 		{
 			get { return _projectState; }
+			set { _projectState = value; }
 		}
 
 		public ProjectBuildStates ProjectBuildState
@@ -116,6 +117,12 @@ namespace IDEHostApplication
 		}
 
 		public bool CanShowIDE()
+		{
+			//TODO AA : implement
+			return true;
+		}
+
+		public bool CanInvokeDialogs()
 		{
 			//TODO AA : implement
 			return true;

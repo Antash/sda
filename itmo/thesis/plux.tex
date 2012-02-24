@@ -1,11 +1,17 @@
 \subsubsection{Plux.NET}
 
-Plux.NET is a plug-in platform for .NET which allows you to build extensible applications consisting of an ultra-thin core and a set of extensions that can be plugged into designated slots of the core or other extensions at run time.
+{\it Plux.NET} --- платформа для работы с плагинами для {\tt .NET}, позволяющая создавать расширяемые приложения, состоящие из <<ядра>>, содержащего минимальный набор функций и возможностей, и набора расширений. В терминологии {\it Plux.NET} ядро --- это основное приложение (host). В ядре содержится набор слотов. Слот определяется как некий контракт между хост-приложением и расширениями, которые могут <<вставляться>> в слот. Загрузка расширений происходит во время выполнения программы. 
 
-Plux.NET uses the metaphor of slots and extensions. A slot specifies a contract for extending a piece of software (called the host), and an extension is a plug-in component (i.e. a .NET assembly) that fills a slot. In essence, a slot declares the kind of information a host expects and extensions provide this information.
+В простейшем случае, слот определяет интерфейс, а также набор параметров с типами. Расширение предоставляет реализацию этого интерфейса вместе со списком значений требуемых параметров. Хост-приложение  будет использовать эти параметры для загрузки и интеграции расширения. Слоты и расширения описываются в виде атрибутов {\tt .NET}.
 
-In its simplest form, a slot declares an interface as well as a list of parameters with their names and types. An extension provides a class implementing this interface as well as a list of values for the parameters. The host will rely on these parameters to load and integrate the extension. Slots and extensions are specified using .NET attributes.
+Для примера описанной концепции рассмотрим абстрактное приложение с графическим пользовательским интерфейсом, которое позволяет в зависимости от установленных расширений добавлять новые команды в меню. Основное приложение <<открывает>> слот, описывая интерфейс {\tt IMenuItem} и два параметра: {\tt Text} (название элемента меню) и {\tt Icon} (пиктограмма пункта меню). Расширение --- это класс, реализующий интерфейс {\tt IMenuItem}, а также значения параметров (к примеру, <<Print>> в качестве названия элемента меню и графический файл <<Print.jpg>> в качестве пиктограммы). На рисунке \ref{plux-scheme} показана схема взаимодействия основного приложения с открытым слотом и расширения:
 
-Let's assume that our host is an application with a graphical user interface that allows menu commands to be installed as extensions. It opens a slot specifying an interface IMenuItem as well as two parameters: Text (for the name of the menu item) and Icon (for the icon to be used in the menu item). An extension is a class implementing IMenuItem. It also provides values for the parameters, e.g. "Print" for the Text parameter and "Print.gif" for the Icon parameter.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=12cm]{plux1.jpg}
+    \caption{Подключение расширения к слоту в платформе Plux.NET}
+    \label{plux-scheme}
+\end{figure}
 
-For every open slot the platform detects available extensions, loads them, assigns the parameter values to the parameters and notifies the host that owns this slot. The host can then take actions for integrating the extension, e.g., by inserting a new menu item into its menus and linking it to the extension class.
+
+Для каждого открытого слота платформа {\it Plux.NET} определяет доступные подходящие расширения, загружает их, присваивает значения параметрам и уведомляет хост-приложение о подключении расширения к слоту. После этого хост-приложение предпринимает действия по интеграции расширения (в примере с приложением с графическим пользовательским интерфейсом, добавляя пункты в меню и устанавливая обработчики событий).

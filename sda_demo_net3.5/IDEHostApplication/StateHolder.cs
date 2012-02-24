@@ -84,7 +84,7 @@ namespace IDEHostApplication
 		}
 
 		public IDEHostApplicationStates IDEHostAppState
-		{ 
+		{
 			get { return _ideHostAppState; }
 			set { _ideHostAppState = value; }
 		}
@@ -103,6 +103,7 @@ namespace IDEHostApplication
 		public ProjectBuildStates ProjectBuildState
 		{
 			get { return _projectBuildState; }
+			set { _projectBuildState = value; }
 		}
 
 		public ProjectExecutionStates ProjectExecutionState
@@ -123,6 +124,12 @@ namespace IDEHostApplication
 		}
 
 		public bool CanInvokeDialogs()
+		{
+			//TODO AA : implement
+			return true;
+		}
+
+		public bool SaveRequired()
 		{
 			//TODO AA : implement
 			return true;

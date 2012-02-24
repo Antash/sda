@@ -4,13 +4,13 @@ using System.IO.IsolatedStorage;
 
 namespace IDEHostApplication
 {
-    /// <summary>
-    /// Helper class for using Isolated Storage.
-    /// In IS we locate compiled addin files. After each addin rebuild new assembly 
-    /// is copied to separate folder in isolated storage. Ext. Application loads addin .dll from this created directory.
-    /// 
-    /// All this code is used only from IDEHost.
-    /// </summary>
+	/// <summary>
+	/// Helper class for using Isolated Storage.
+	/// In IS we locate compiled addin files. After each addin rebuild new assembly 
+	/// is copied to separate folder in isolated storage. Ext. Application loads addin .dll from this created directory.
+	/// 
+	/// All this code is used only from IDEHost.
+	/// </summary>
 	static class IsolatedStorageService
 	{
 		/// <summary>

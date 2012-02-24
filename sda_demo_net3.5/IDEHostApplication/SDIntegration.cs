@@ -70,13 +70,13 @@ namespace IDEHostApplication
 
 		private void InitCommunicationService()
 		{
-			var host = new ServiceHost(typeof (SDAService));
+			var host = new ServiceHost(typeof(SDAService));
 			var binding = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None)
-			              	{
-								ReceiveTimeout = TimeSpan.FromHours(42), 
+							{
+								ReceiveTimeout = TimeSpan.FromHours(42),
 								SendTimeout = TimeSpan.FromHours(42)
 							};
-			host.AddServiceEndpoint(typeof(ISDAService), binding, String.Format(CommunicationService.AddressTemplate ,Program.AppGuid));
+			host.AddServiceEndpoint(typeof(ISDAService), binding, String.Format(CommunicationService.AddressTemplate, Program.AppGuid));
 			host.Open();
 		}
 
@@ -140,7 +140,7 @@ namespace IDEHostApplication
 			_sdHost.EndBuild += new EventHandler(_sdHost_EndBuild);
 		}
 
-		#endregion	
+		#endregion
 
 		#region SharpDevelopHost event handlers
 
@@ -340,6 +340,22 @@ namespace IDEHostApplication
 		internal void RunBuild()
 		{
 			_sdHost.CreateInstanceInTargetDomain<InteractionClass>().Build();
+		}
+
+		internal void BringToFrontIDE()
+		{
+			_sdHost.WorkbenchVisible = true;
+			_sdHost.CreateInstanceInTargetDomain<InteractionClass>().BringToFront();
+		}
+
+		internal void HideIDE()
+		{
+
+		}
+
+		public void OnProjectSave()
+		{
+			
 		}
 	}
 }

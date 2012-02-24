@@ -2,19 +2,19 @@
 
 namespace IDEHostApplication
 {
-    /// <summary>
-    /// Helper class for work with Windows processes
-    /// 
+	/// <summary>
+	/// Helper class for work with Windows processes
+	/// 
 	/// This code provides a nice interface for finding the Parent process object 
 	/// and takes into account the possibility of multiple processes with the same name
-    /// </summary>
+	/// </summary>
 	public static class ProcessExtensions
 	{
 
-        /// <summary>
-        /// Returns indexed process name for specified PID
-        /// (Index is needed when there are more than one process with the same name)
-        /// </summary>
+		/// <summary>
+		/// Returns indexed process name for specified PID
+		/// (Index is needed when there are more than one process with the same name)
+		/// </summary>
 		private static string FindIndexedProcessName(int pid)
 		{
 			var processName = Process.GetProcessById(pid).ProcessName;

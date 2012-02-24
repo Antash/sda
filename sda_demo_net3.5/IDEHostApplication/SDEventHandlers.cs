@@ -25,30 +25,31 @@ namespace IDEHostApplication
 		public override void Run()
 		{
 			var build = new SDBuild();
-			build.BuildComplete += delegate
-			{
-				if (build.LastBuildResults.ErrorCount == 0)
+			build.BuildComplete += 
+				delegate
 				{
-					if (build.LastBuildResults.BuiltProjects.Count > 0)
+					if (build.LastBuildResults.ErrorCount == 0)
 					{
-						var project = build.LastBuildResults.BuiltProjects[0] as AbstractProject;
-						if (project != null)
+						if (build.LastBuildResults.BuiltProjects.Count > 0)
 						{
-							// If build successfull we need to copy assembly and debug info to iso storage
-							// Than attach debugger and finaly notify Ext. Application to start loading addin assembly
-							// This order is needed to debug addin from the very beginning.
-							SDIntegration.Instance.CopyToIsoStorage(project.OutputAssemblyFullPath);
-							SDIntegration.Instance.AttachToHost();
-							SDIntegration.Instance.OnBuildSuccess(true);
+							var project = build.LastBuildResults.BuiltProjects[0] as AbstractProject;
+							if (project != null)
+							{
+								// If build successfull we need to copy assembly and debug info to iso storage
+								// Than attach debugger and finaly notify Ext. Application to start loading addin assembly
+								// This order is needed to debug addin from the very beginning.
+								SDIntegration.Instance.CopyToIsoStorage(project.OutputAssemblyFullPath);
+								SDIntegration.Instance.AttachToHost();
+								SDIntegration.Instance.OnBuildSuccess(true);
+							}
 						}
+						LoggingService.Info("Debugger Command: Start (withDebugger=" + withDebugger + ")");
 					}
-					LoggingService.Info("Debugger Command: Start (withDebugger=" + withDebugger + ")");
-				}
-				else
-				{
-					SDIntegration.Instance.OnBuildFailure();
-				}
-			};
+					else
+					{
+						SDIntegration.Instance.OnBuildFailure();
+					}
+				};
 			build.Run();
 		}
 	}
@@ -183,7 +184,7 @@ namespace IDEHostApplication
 	{
 		public override void Run()
 		{
-			if (StateHolder.Instance.CanInvokeDialogs()) 
+			if (StateHolder.Instance.CanInvokeDialogs())
 				SDIntegration.Instance.ShowNewProjectDialog();
 		}
 	}

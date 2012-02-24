@@ -15,7 +15,7 @@ namespace IDEHostApplication
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			Debugger.Launch();
+			System.Diagnostics.Debugger.Launch();
 
 			if (args.Length == 0)
 				return;

@@ -1,15 +1,19 @@
 \subsubsection{Mono.AddIns, System.AddIn}
 
-Mono.Addins is a generic framework for creating extensible applications, and for creating add-ins which extend those applications. This framework has been designed to be useful for a wide range of applications: from simple applications with small extensibility needs, to complex applications which need support for large add-in structures.
+\TODO{Здесь только про Моно, ни слова а System.AddIn}
 
-The main features of Mono.Addins are:
-Supports descriptions of add-ins using custom attributes (for simple and common extensions) or using XML manifests (for more complex extensibility needs).
-Supports extension metadata and data-only extensions.
-Support for add-in hierarchies, where add-ins may depend on other add-ins.
-Lazy loading of add-ins.
-Dynamic activation / deactivation of add-ins at run time.
-Allows sharing add-in registries between applications, and defining arbitrary add-in locations.
-Allows implementing extensible libraries.
-Supports add-in localization.
-Provides an API for accessing to add-in descriptions, which will allow building development and documentation tools for handling add-ins.
-In addition to the basic add-in engine, it provides a Setup library to be used by applications which want to offer basic add-in management features to users, such as enabling/disabling add-ins, or installing add-ins from on-line repositories.
+{\tt Mono.Addins} --- это универсальная платформа для создания расширяемых приложений и самих плагинов для таких приложений. Прлатформа была разработана  как для работы с небольшими приложениями (с простейшими механизмами расширения), так и для работы с крупными системами, расширяемость которых заложена в дизайн и играет одну из ключевых ролей.
+
+Основные особенности платформы {\tt Mono.Addins}:
+\begin{itemize}
+  \item поддержка описания плагина с помощью пользовательских атрибутов (для простых расширений) либо с помощью {\tt XML}-манифеста (в более сложных случаях);
+  \item поддержка расширений-метаданных и расширений, содержащих только данные;
+  \item поддержка иерархии расширений, в которой один плагин может зависеть от других;
+  \item <<ленивая>> загрузка плагинов;
+  \item использование одного набора установленных расширений несколькими приложениями;
+  \item динамическая активация и деактивация расширения в процессе выполнения основного приложения;
+  \item разработка расширяемых библиотек;
+  \item локализация расширения;
+  \item наличие {\tt API} для доступа к описанию расширений, за счёт чего возможно создание инструментов для разработки и документирования плагинов;
+  \item наличие инструментов для установки и управления плагинами.
+\end{itemize}

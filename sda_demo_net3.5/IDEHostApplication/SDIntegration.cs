@@ -6,6 +6,7 @@ using System.ServiceModel;
 using CommunicationServices;
 using ICSharpCode.SharpDevelop.Sda;
 using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace IDEHostApplication
 {
@@ -16,6 +17,8 @@ namespace IDEHostApplication
 		private static string _sdAddInDir;
 		private static string _sdBinDir;
 
+		private const string SDConfigFile = "ICSharpCode.SharpDevelop.addin";
+
 		private static readonly string[] AssemblyExtentions = new[] { "dll", "exe" };
 
 		private WorkbenchSettings _workbenchSettings;
@@ -23,6 +26,8 @@ namespace IDEHostApplication
 		private StartupSettings _startupSettings;
 
 		public Process HostProcess { get; private set; }
+
+		private string _addInBinaryFilePath;
 
 		#region Singletone definition
 
@@ -112,10 +117,11 @@ namespace IDEHostApplication
 									DataDirectory = _sdDataDir,
 									ApplicationRootPath = _sdRootDir
 								};
-			_startupSettings.AddAddInsFromDirectory(_sdAddInDir);
+			//TODO AA : implement loading custom addin configuration
+			_startupSettings.AddAddInsFromDirectory(Path.Combine(_sdAddInDir, "AddIns"));
 
 			//Loading customised #D config file
-			//_startupSettings.AddAddInFile(Path.Combine(Application.StartupPath, sdConfigFile));
+			_startupSettings.AddAddInFile(Path.Combine(Application.StartupPath, SDConfigFile));
 
 			AppDomain.CurrentDomain.AssemblyResolve += LoadAssemlbyFromProductInstallationFolder;
 
@@ -234,7 +240,7 @@ namespace IDEHostApplication
 				System.Threading.ThreadPool.QueueUserWorkItem(state => _sdHost.RunWorkbench(_workbenchSettings));
 		}
 
-		public void OpenProject(string fileName)
+		internal void OpenProject(string fileName)
 		{
 			if (!_sdHost.IsSolutionOrProject(fileName))
 			{
@@ -259,7 +265,7 @@ namespace IDEHostApplication
 			}
 		}
 
-		public void CloseIDE()
+		internal void CloseIDE()
 		{
 			if (!_sdHost.CloseWorkbench(false))
 			{
@@ -267,11 +273,11 @@ namespace IDEHostApplication
 			}
 		}
 
-		public void foo()
+		internal void foo()
 		{
 		}
 
-		public void ShowIDE()
+		internal void ShowIDE()
 		{
 			//TODO AA : implement
 			if (!StateHolder.Instance.CanShowIDE())
@@ -292,6 +298,48 @@ namespace IDEHostApplication
 			}
 
 			RunWorkbench();
+		}
+
+		internal void CopyToIsoStorage(string outputAssemblyFullPath)
+		{
+			_addInBinaryFilePath = IsolatedStorageService.CopyFileToStorage(outputAssemblyFullPath);
+		}
+
+		internal void OnBuildSuccess(bool isDebugging)
+		{
+			CommunicationService.SdaCallback.BuildSucceded(_addInBinaryFilePath, isDebugging);
+		}
+
+		internal void OnBuildFailure()
+		{
+			CommunicationService.SdaCallback.BuildFailed();
+		}
+
+		internal void AttachToHost()
+		{
+			if (CommunicationService.SdaCallback.IsParentx64())
+			{
+				//TODO AA : x64 support
+			}
+			else
+			{
+				_sdHost.CreateInstanceInTargetDomain<InteractionClass>().Attach(HostProcess);
+			}
+		}
+
+		internal void ShowNewProjectDialog()
+		{
+			CommunicationService.SdaCallback.ShowNewProjectDialog();
+		}
+
+		internal void ShowOpenProjectDialog()
+		{
+			CommunicationService.SdaCallback.ShowOpenProjectDialog();
+		}
+
+		internal void RunBuild()
+		{
+			_sdHost.CreateInstanceInTargetDomain<InteractionClass>().Build();
 		}
 	}
 }

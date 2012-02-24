@@ -42,6 +42,7 @@ namespace IDEHostApplication
 		/// </summary>
 		public void ShowIDE()
 		{
+			SDIntegration.Instance.ShowIDE();
 		}
 
 		/// <summary>

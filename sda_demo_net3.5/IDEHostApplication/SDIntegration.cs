@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.ServiceModel;
@@ -21,9 +22,11 @@ namespace IDEHostApplication
 		private SharpDevelopHost _sdHost;
 		private StartupSettings _startupSettings;
 
+		public Process HostProcess { get; private set; }
+
 		#region Singletone definition
 
-		private static volatile SDIntegration _instance = new SDIntegration();
+		private static volatile SDIntegration _instance;
 		private static readonly object SyncRoot = new Object();
 
 		public static SDIntegration Instance
@@ -49,13 +52,15 @@ namespace IDEHostApplication
 
 		private SDIntegration()
 		{
-			StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Initializing);
+			StateHolder.Instance.IDEHostAppState = StateHolder.IDEHostApplicationStates.Initializing;
+
+			HostProcess = Process.GetCurrentProcess().Parent();
 
 			InitCommunicationService();
 			InitVariables();
 			ConfigureEnviorenment();
 
-			StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Initialized);
+			StateHolder.Instance.IDEHostAppState = StateHolder.IDEHostApplicationStates.Initialized;
 		}
 
 		private void InitCommunicationService()
@@ -122,6 +127,7 @@ namespace IDEHostApplication
 
 		private void assignHandlers()
 		{
+			_sdHost.BeforeRunWorkbench += new EventHandler(_sdHost_BeforeRunWorkbench);
 			_sdHost.WorkbenchClosed += new EventHandler(_sdHost_WorkbenchClosed);
 			_sdHost.SolutionLoaded += new EventHandler(_sdHost_SolutionLoaded);
 			_sdHost.StartBuild += new EventHandler(_sdHost_StartBuild);
@@ -131,6 +137,11 @@ namespace IDEHostApplication
 		#endregion	
 
 		#region SharpDevelopHost event handlers
+
+		void _sdHost_BeforeRunWorkbench(object sender, EventArgs e)
+		{
+			StateHolder.Instance.IDEHostAppState = StateHolder.IDEHostApplicationStates.Running;
+		}
 
 		void _sdHost_EndBuild(object sender, EventArgs e)
 		{
@@ -149,7 +160,7 @@ namespace IDEHostApplication
 
 		void _sdHost_WorkbenchClosed(object sender, EventArgs e)
 		{
-			StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Suspended);
+			StateHolder.Instance.IDEHostAppState = StateHolder.IDEHostApplicationStates.Suspended;
 		}
 
 		#endregion
@@ -219,7 +230,7 @@ namespace IDEHostApplication
 
 		private void RunWorkbench()
 		{
-			if (StateHolder.Instance.ChangeIDEHostApplicationState(StateHolder.IDEHostApplicationStates.Running))
+			if (StateHolder.Instance.IDEHostAppState == StateHolder.IDEHostApplicationStates.Initialized)
 				System.Threading.ThreadPool.QueueUserWorkItem(state => _sdHost.RunWorkbench(_workbenchSettings));
 		}
 
@@ -230,22 +241,57 @@ namespace IDEHostApplication
 				CommunicationService.SdaCallback.ProjectOpenError();
 				return;
 			}
-			//isLoadingProjectSuccess = false;
 
-			if (!_workbenchIsRunning)
+			if (!StateHolder.Instance.CanOpenProject())
+			{
+				// TODO AA : exception?
+				return;
+			}
+			if (StateHolder.Instance.IDEHostAppState == StateHolder.IDEHostApplicationStates.Running)
+			{
+				_sdHost.OpenProject(fileName);
+			}
+			else
 			{
 				_workbenchSettings.InitialFileList.Clear();
 				_workbenchSettings.InitialFileList.Add(fileName);
 				RunWorkbench();
-				//loadingProjectTimer.Start();
+			}
+		}
+
+		public void CloseIDE()
+		{
+			if (!_sdHost.CloseWorkbench(false))
+			{
+				//TODO AA : force close
+			}
+		}
+
+		public void foo()
+		{
+		}
+
+		public void ShowIDE()
+		{
+			//TODO AA : implement
+			if (!StateHolder.Instance.CanShowIDE())
+				return;
+			if (!string.IsNullOrEmpty(StateHolder.Instance.LastProjectOpened))
+			{
+				//if (StateHolder.Instance.ProjectState)
+				//{
+				//    OpenProject(lastProjectOpened);
+				//}
+				//else
+				//{
+				//    BringToFrontIDE();
+				//}
 			}
 			else
 			{
-				//loadingProjectTimer.Start();
-				_sdHost.OpenProject(fileName);
 			}
 
-			//lastProjectOpened = filename;
+			RunWorkbench();
 		}
 	}
 }

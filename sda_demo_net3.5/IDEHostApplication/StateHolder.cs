@@ -52,7 +52,7 @@ namespace IDEHostApplication
 		private ProjectBuildStates _projectBuildState;
 		private ProjectExecutionStates _projectExecutionState;
 
-		private string _lastProjectOpened;
+		public string LastProjectOpened { get; set; }
 
 		private static volatile StateHolder _instance = new StateHolder();
 		private static readonly object SyncRoot = new Object();
@@ -76,7 +76,6 @@ namespace IDEHostApplication
 
 		protected StateHolder()
 		{
-			_lastProjectOpened = null;
 			_ideHostAppState = IDEHostApplicationStates.NotInitialized;
 			_sdWorkbenchWindowState = SDWorkbenchWindowStates.Closed;
 			_projectState = ProjectStates.Closed;
@@ -84,16 +83,41 @@ namespace IDEHostApplication
 			_projectExecutionState = ProjectExecutionStates.Stopped;
 		}
 
-		public bool ChangeIDEHostApplicationState(IDEHostApplicationStates newState)
+		public IDEHostApplicationStates IDEHostAppState
+		{ 
+			get { return _ideHostAppState; }
+			set { _ideHostAppState = value; }
+		}
+
+		public SDWorkbenchWindowStates SDWorkbenchWindowState
 		{
-			switch (newState)
-			{
-				case IDEHostApplicationStates.Running:
-					if (_ideHostAppState != IDEHostApplicationStates.Initialized)
-						return false;
-					break;
-			}
-			_ideHostAppState = newState;
+			get { return _sdWorkbenchWindowState; }
+		}
+
+		public ProjectStates ProjectState
+		{
+			get { return _projectState; }
+		}
+
+		public ProjectBuildStates ProjectBuildState
+		{
+			get { return _projectBuildState; }
+		}
+
+		public ProjectExecutionStates ProjectExecutionState
+		{
+			get { return _projectExecutionState; }
+		}
+
+		public bool CanOpenProject()
+		{
+			//TODO AA : implement
+			return true;
+		}
+
+		public bool CanShowIDE()
+		{
+			//TODO AA : implement
 			return true;
 		}
 	}

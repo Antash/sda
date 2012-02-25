@@ -1,85 +1,16 @@
 \subsubsection{AL Platform}
 
-Overview
+\TODO{тут только вода}
+\TODO{из описания вообще непонятно, в чём фишка этой платформы}
+\TODO{такое ощущение, что эта платформа заточена только на проталкивании GUI из плагина в хост}
+\TODO{надо бы установить это чудо себе и разобраться с ним.}
 
-AL Platform provides an Add-In framework for rapid development of flexible solutions with a complex user interface. AL Platform introduces the concept of Abstract Desktop, and defines a new development methodology - Tool-Oriented Approach. A tool is an independent software module - Add-In - which can be hosted inside other applications. The idea of abstract desktop allows these tools to utilize the application's workspace and menu without recompiling the tool itself, and without recompiling the application. AL Platform is not an external program you should use in order to manage your application. AL Platform is a component library which ships as a set of .NET assemblies. If you want to build a reliable and flexible application that consists of a set of reusable modules your choice will be AL Platform! 
-AL Platform provides an Add-In framework for rapid development of flexible solutions with a complex user interface. AL Platform introduces the concept of Abstract Desktop, and defines a new development methodology - Tool-Oriented Approach. A tool is an independent software module - Add-In - which can be hosted inside other applications. The idea of abstract desktop allows these tools to utilize the application's workspace and menu without recompiling the tool itself, and without recompiling the application.
+{\it AL Platform} --- платформа для быстрой разработки гибких решений со сложным интерфейсом пользователя. {\it AL Platform} вводит концепцию абстрактного рабочего стола, и определяет новую методологию разработки --- <<Инструментально-ориентированное подход>>. Инструмент --- это независимый программный модуль, плагин, который размещается внутри других приложений. Идея абстрактного рабочего стола позволяет таким инструментам <<наполнять>> рабочее пространство приложения и его меню без перекомпиляции приложения или инструмента. {\it AL Platform} не являетя внешним самостоятельным приложением, это библиотека классов, поставляемая в виде набора {\tt .NET} сборок. 
 
-AL Platform is not an external program you should use in order to manage your application. AL Platform is a component library which ships as a set of .NET assemblies. If you want to build a reliable and flexible application that consists of a set of reusable modules your choice will be AL Platform! 
+{\it AL Platform} позволяет выстроить архитектуру приложения таким образом, чтобы оно состояло из интегрированных модулией (плагинов), которые в терминологии платформы называются инструментами. Каждый инструмент включает в себя некоторую бизнес-логику. В зависимости от решаемых задач, инструмент может использоваться в различных приложениях. Инструменты разрабатываются независимо различными командами разработчиков. Плагины могут быть собраны в разные {\tt .NET} сборки и размещены физически на разных компьютерах. {\it AL Platform} предоставляет возможность таким инструментам взаимодействовать друг с другом, минимизируя при этом накладные расходы.
 
-What a Tool Is
+С точки зрения программиста, для создания нового инструмента нужно разработать класс, унаследованный от {\tt Al.Application.Tool} или {\tt Al.DesktopApplication.DesktopTool}. Компонент приложения, отвечающий за работу с плагинами, называется менеджером инструментов. Менеджер инструментов определяет, как тот или иной инструмент будет отображаться в рабочем пространстве приложения, а также предоставляет слой инфраструктуры, необходимыйй для взаимодействия инструмента и приложения. 
 
-AL Platform gives you a software architecture which allows to integrate modules (Add-Ins) the application is comprised of. We call these Add-Ins tools.
+Все возможности приложения на базе {\it AL Platform} конфигурируются с помощью {\tt XML} файла с настройками. За счёт этого достигается максимальная гибкость персонализации существующих приложений.
 
-A tool is a software module which solves some business task. In bank trading, a tool can perform some analyzing logic (e.g., make some calculations and show charts). In aircraft, a tool can help a desk assistant to book a ticket for a client.
-
-Normally, a tool can be associated with one or more use cases. Below is an example of an application which is comprised of 3 tools:
-Analyzer which shows a chart and a grid
-Explorer which displays some search results
-Customer tool that allows to view customer details and other customer related information.
-
-Developing Tool 
-
-Tools can be developed independently by different teams. They can reside in different assemblies on different machines. AL Platform allows these tools to communicate, and eliminates the communication overhead.
-
-As a developer, in order to introduce a new tool, you create a new class and derive it from Al.Application.Tool or Al.DesktopApplication.DesktopTool. Then you fill some initialization code (add menu items, define tool view, etc.). And the tool is ready for use.
-
-Analyzer tool's code is further.
-
-Tool Host
-
-Tools are easy-to-develop 100%-reusable independent modules. You can wrap your legacy .NET code in a tool, and use this code from any application developed on AL Platform's basis. One tool can serve your needs in different applications, and the application can work with any number of tool instances. We call such applications tool hosts.
-
-A tool host defines how a tool view is rendered, and provides some infrastructural layer which the tool might want to utilize. The tool host performs the following tasks:
-manages application menu. The tool host allows you to define menu items in a unified way, which allows them to be displayed correctly on any GUI Framework you use.
-renders a tool view in a workspace. For now the workspace allows a tool view to be shown either as a dockable window (docked left, right, top, bottom, floating) or as MDI child form.
-allows a tool to export its menu items. In other words, the tool host gives an opportunity for a tool to show its menu items in application's main menu, context menu, tool bar, and status bar.
-Unified Menu
-
-A tool host gives you the opportunity to define menu items in a unified way, which allows them to be displayed correctly on any GUI Framework you use. For now we provide Standard Windows Forms, Infragistics, Syncfusion, and MS Office GUI Frameworks. Our AL Office+ Pack gives you the ability to work with MS Office menu the same way you do when developing a standard desktop application.
-
-AL Platform defines 4 menu areas: Main Menu, Context Menu, Tool Bar, and Status Bar.
-
-Whatever area you are going to affect, you create an Al.DesktopApplication.MenuItem instance. MenuItem is a base class from which we derived PopupMenuItem, StateMenuItem, and StaticMenuItem. Some MenuItem properties are listed below:
-Caption, Enabled, Image, IsFirstInGroup, Name, Shortcut, ShowShortcut, Tooltip, Visible, Width.
-
-Exporting Tool Menu Items
-
-A tool host allows a tool to export its menu items. In other words, the tool host gives an opportunity for the tool to show its menu items in application's main menu, context menu, tool bar, and status bar. Whatever the number of tool instances is, each tool instance has its own menu. This particularly means that actions upon menu items will affect only active tool instance. 
-
-Tool's menu items get disabled once there is no active tool. However, if there is only one tool instance, its menu items will work with no difference whether the tool is active or not. Also, you can define tool's menu as shareable, meaning that menu items won't change their state (enabled, disabled, image, etc.) after changing the active tool. 
-
-Workspace
-
-A tool host renders a tool view in a workspace. For now the workspace allows a tool view to be shown either as a dockable window (docked left, right, top, bottom, floating) or as MDI child window. In order to make a tool view dockable, you simply implement the IDesktopDockable interface. The only member this interface contains is 
-
-DockedLocation InitialDockedLocation { get; } 
-
-Because some GUI Frameworks (like Standard Windows) doesn't allow dockable windows, controls are shown in MDI Child forms. 
-
-AL Office+ Pack
-
-AL Office+ Pack allows you to render your tools within MS Office applications. Keep in mind you still don't recompile your tools.
-
-AL Office+ allows you to host any .NET UserControl in Office dockable window (see Explorer Tool). You can use this feature whenever you want! 
-
-Abstract Desktop
-
-Because tool view is a standard UserControl class and menu items are defined with AL Platform's classes, we introduced the concept of Abstract Desktop: without recompiling the tool, you get it working with any tool host whatever GUI framework it uses. However, you don't need to develop the tool host by yourself. The only thing you do is just adding some initialization logic with AL Platform. The simplest way to define your tool host is to use one of the runner classes we provide:
-
-WinFormsAppConfig winFormsAppConfig = new WinFormsAppConfig();
-
-WinFormsStdAppRunner winFormsAppRunner = new WinFormsStdAppRunner (winFormsAppConfig);
-InfragisticsAppRunner winFormsAppRunner = new InfragisticsAppRunner (winFormsAppConfig);
-SyncfusionAppRunner winFormsAppRunner = new SyncfusionAppRunner (winFormsAppConfig);
-
-
-WinFormsApp.Run(winFormsAppRunner, true);
-
-Configuration
-
-Our approach to configuration allows you to easily customize your application through defining settings in a configuration file, or any other XML source. Every element of AL Platform infrastructure (tool service, tool configuration information, application menu, etc.) is configurable. This gives you the maximum of flexibility: you can customize your existing application starting from adding minor changes like menu items, and finishing with complex user interface rearrangement!
-
-Linking Tools 
-
-Tool hosts provide the ability to link tools. This actually means that a tool can be launched in one tool host and utilized in another. In the picture, the Analyzer Tool was launched remotely from SampleRunner application.
+Важной особенностью платформы является возможность <<связывать>> инструменты между собой. Это означает, что инструмент может быть запушен в одном менеджере инструментов, а использован в другом.

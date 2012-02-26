@@ -4,7 +4,7 @@
 \usepackage{ucs}
 \usepackage[english,russian]{babel}
 \usepackage{extsizes} % чтобы можно было использовать шрифты больше, чем 12pt
-\usepackage{pscyr} % красивые русскоязычные шрифты (мануал по установке тут: http://ishutov.blogspot.com/2011/02/miktex-29-pscyr-04d.html)
+\usepackage{fontenc}
 \usepackage{xcolor}
 %\usepackage{listings}
 \usepackage{graphicx}
@@ -101,7 +101,8 @@
     % Аннотация
 	\include{annotation}
 	
-	\tableofcontents
+	%TODO :: Почему-то не работает
+	%\tableofcontents
     \pagebreak
 	
 	% ---------  Основные главы -----------------------------------

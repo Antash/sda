@@ -95,15 +95,21 @@
     
     \newcommand{\TODO}[1]{\fcolorbox{red}{red}{TODO :: #1}}
     \newcommand{\Definition}[1]{{\bf Определение. } #1 \par} % TODO :: Добавить счётчик
-   
-    \setcounter{page}{4}   % номер первой страницы
-	
     
+    %Переопределение команды оглавления. Грязный хак.
+    \renewcommand\tableofcontents{%
+    \section*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \@starttoc{toc}%
+    }
+   
+    \setcounter{page}{4}   % номер первой страницы   
+ 
     % Аннотация
 	\include{annotation}
-	
-	%TODO :: Почему-то не работает
-	%\tableofcontents
+
+	\tableofcontents
     \pagebreak
 	
 	% ---------  Основные главы -----------------------------------

@@ -95,6 +95,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExtIntegrationUI\ExtIntegrationUI.csproj">
+      <Project>{3FF82C3A-831C-49F1-B14C-09FBED2DD683}</Project>
+      <Name>ExtIntegrationUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExtIntegration\ExtIntegration.csproj">
       <Project>{BE25229B-2E2D-48B7-A8B7-BA80CA69B46B}</Project>
       <Name>ExtIntegration</Name>

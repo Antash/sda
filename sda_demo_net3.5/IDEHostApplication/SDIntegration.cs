@@ -94,8 +94,8 @@ namespace IDEHostApplication
 			//    throw new Exception("no #D installation!");
 			//}
 			// TODO AA : remove hardcode!
-			//sdBase = @"C:\Program Files (x86)\SharpDevelop\3.0";
-			sdBase = @"C:\Program Files\SharpDevelop\3.0";
+			sdBase = @"C:\Program Files (x86)\SharpDevelop\3.0";
+			//sdBase = @"C:\Program Files\SharpDevelop\3.0";
 
 			//_sdRootDir = Path.GetDirectoryName(Path.GetDirectoryName(sdBase).TrimEnd('\\'));
 			_sdRootDir = sdBase;

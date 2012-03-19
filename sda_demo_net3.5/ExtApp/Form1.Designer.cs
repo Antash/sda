@@ -28,25 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.button1 = new System.Windows.Forms.Button();
+			this.extManager1 = new ExtIntegrationUI.ExtManager();
 			this.SuspendLayout();
 			// 
-			// button1
+			// extManager1
 			// 
-			this.button1.Location = new System.Drawing.Point(12, 12);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(105, 68);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "open #D";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.extManager1.Location = new System.Drawing.Point(12, 12);
+			this.extManager1.Name = "extManager1";
+			this.extManager1.Size = new System.Drawing.Size(157, 206);
+			this.extManager1.TabIndex = 0;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(501, 336);
-			this.Controls.Add(this.button1);
+			this.ClientSize = new System.Drawing.Size(309, 293);
+			this.Controls.Add(this.extManager1);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.ResumeLayout(false);
@@ -55,7 +52,8 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button button1;
+		private ExtIntegrationUI.ExtManager extManager1;
+
 	}
 }
 

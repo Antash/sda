@@ -83,22 +83,27 @@
 
 Объявление дополнительного обработчика события достижения точки останова:
 
-var bpDebuggerBreakpointHit = new EventHandler<Debugger.BreakpointEventArgs>(
-delegate
-{
-	// В этой функции происходит раскрытие окна IDE поверх всех остальных окон
-	SDIntegration.Instance.BringToFrontIDE();
-});
+\begin{lstlisting}
+var bpDebuggerBreakpointHit 
+     = new EventHandler<Debugger.BreakpointEventArgs>(
+        delegate
+        {
+              SDIntegration.Instance.BringToFrontIDE();
+        }
+);
+\end{lstlisting}
+
 
 Получение коллекции точек останова, установленных в открытом проекте:	
 
-var fieldInfo = DebuggerService.CurrentDebugger.GetType().GetField("debugger", BindingFlags.Instance | BindingFlags.NonPublic);
-
+\begin{lstlisting}
+var fieldInfo = DebuggerService.CurrentDebugger.GetType().GetField(
+      "debugger", BindingFlags.Instance | BindingFlags.NonPublic);
 var debugger = fieldInfo.GetValue(DebuggerService.CurrentDebugger);
-
-var field = debugger.GetType().GetField("breakpointCollection", BindingFlags.Instance | BindingFlags.NonPublic);
-
+var field = debugger.GetType().GetField("breakpointCollection", 
+     BindingFlags.Instance | BindingFlags.NonPublic);
 var breakPointColl = (IEnumerable)field.GetValue(debugger);
+\end{lstlisting}
 
 Как видно, здесь происходит обращение к закрытым членам класса {\it Debugger} из плагина {\it Debugger.Core.dll}. Это нужно учитывать при миграции платформы на следующие версии SharpDevelop, так как логика работы этого класса может измениться.
 

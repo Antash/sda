@@ -1,0 +1,31 @@
+
+
+книги
+===========================================
+[Windows Communication Foundation]
+wcf-services
+wcf-unleashed
+
+[Общие сведения о C# и dotNet]
+cs2010-dotnet40
+cs2008-dotnet35
+CLR-via-CS
+
+[Другое]
+band-four
+patterns-of-enterprise-app   
+
+
+
+
+
+статьи
+============================================
+System.Addins-article
+automata-via-macros
+mastering-vba
+addins-and-extensibility
+dotnet-app-extensibility
+use-systemaddin-namespace
+addins1-article
+addins2-article

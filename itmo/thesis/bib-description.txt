@@ -12,7 +12,6 @@ cs2008-dotnet35
 CLR-via-CS
 
 [Другое]
-band-four
 patterns-of-enterprise-app   
 
 

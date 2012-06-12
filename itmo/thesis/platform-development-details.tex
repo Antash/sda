@@ -84,36 +84,48 @@
 
 Объявление дополнительного обработчика события достижения точки останова:
 
-\begin{lstlisting}
-var bpDebuggerBreakpointHit 
-     = new EventHandler<Debugger.BreakpointEventArgs>(
-        delegate
-        {
-              SDIntegration.Instance.BringToFrontIDE();
-        }
-);
-\end{lstlisting}
+\begin{figure}[!h]
+    \includegraphics[width=16cm]{code1.png}
+\end{figure}
+
+%\begin{lstlisting}
+%var bpDebuggerBreakpointHit 
+%     = new EventHandler<Debugger.BreakpointEventArgs>(
+%        delegate
+%        {
+%              SDIntegration.Instance.BringToFrontIDE();
+%        }
+%);
+%\end{lstlisting}
 
 
 Получение коллекции точек останова, установленных в открытом проекте:	
 
-\begin{lstlisting}
-var fieldInfo = DebuggerService.CurrentDebugger.GetType().GetField(
-      "debugger", BindingFlags.Instance | BindingFlags.NonPublic);
-var debugger = fieldInfo.GetValue(DebuggerService.CurrentDebugger);
-var field = debugger.GetType().GetField("breakpointCollection", 
-     BindingFlags.Instance | BindingFlags.NonPublic);
-var breakPointColl = (IEnumerable)field.GetValue(debugger);
-\end{lstlisting}
+\begin{figure}[!h]
+    \includegraphics[width=16cm]{code2.png}
+\end{figure}
+
+%\begin{lstlisting}
+%var fieldInfo = DebuggerService.CurrentDebugger.GetType().GetField(
+%      "debugger", BindingFlags.Instance | BindingFlags.NonPublic);
+%var debugger = fieldInfo.GetValue(DebuggerService.CurrentDebugger);
+%var field = debugger.GetType().GetField("breakpointCollection", 
+%     BindingFlags.Instance | BindingFlags.NonPublic);
+%var breakPointColl = (IEnumerable)field.GetValue(debugger);
+%\end{lstlisting}
 
 Как видно, здесь происходит обращение к закрытым членам класса {\it Debugger} из плагина {\it Debugger.Core.dll}. Это нужно учитывать при миграции платформы на следующие версии SharpDevelop, так как логика работы этого класса может измениться.
 
 Далее, всем точкам останова присваивается дополнительный обработчик события:
 
-foreach (var bp in breakPointColl)
-{
-	bp.GetType().GetEvent("Hit").AddEventHandler(bp, bpDebuggerBreakpointHit);
-}
+\begin{figure}[!h]
+    \includegraphics[width=16cm]{code3.png}
+\end{figure}
+
+%foreach (var bp in breakPointColl)
+%{
+%	bp.GetType().GetEvent("Hit").AddEventHandler(bp, bpDebuggerBreakpointHit);
+%}
 
 Стоит отметить, что эти действия необходимо повторять для каждого нового брейкпоинта, установленного в IDE. К счастью, событие установки брейкпоинта существует, и доступно <<из коробки>>, поэтому дополнительных проблем с этим не возникло.
 

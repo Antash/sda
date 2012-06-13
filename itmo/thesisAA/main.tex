@@ -10,6 +10,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{lscape}
+\usepackage{listingsutf8}
 
 \usepackage{indentfirst}
 
@@ -20,8 +21,14 @@
 %\usepackage{tikz}
 %\usetikzlibrary{positioning,arrows,shapes,shadows}
 
-\lstset{inputencoding=utf8x}
-\lstset{language=[Sharp]C}
+% Settings for Listings
+\lstset{basicstyle=\ttfamily\fontsize{11}{10}\selectfont}  
+\lstset{tabsize=2}
+\lstset{keywordstyle=\bf\color{blue}, commentstyle=\color{Comments},stringstyle=\color{mauve}}
+\lstset{breaklines=true}
+\definecolor{Comments}{RGB}{0,153,0}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
 
 \graphicspath{{pics/}}
 
@@ -45,8 +52,8 @@
 
 \pagestyle{plain}
 
-%\newcounter{appendix_number}
-%\newcommand{\Appendix}[1]{\addtocounter{appendix_number}{1} \section{Приложение \arabic{appendix_number}. #1}}
+\newcounter{appendix_number}
+\newcommand{\Appendix}[1]{\addtocounter{appendix_number}{1} \section{Приложение \arabic{appendix_number}. #1}}
 
 % замена в подписи к рисунку разделителя ":" на "." (Рис. 2: Рисунок   станет   Рис. 2. Рисунок.) - - - - - - - - -
 \renewcommand{\@makecaption}[2]{%
@@ -164,7 +171,10 @@
     \addcontentsline{toc}{section}{Источники} % !!!!! TODO :: это баг!!!!!!! литература начнётся с новой страницы !!!!!!!!!!!!!!!!!!!!!!!!!!!
     \bibliography{references}
     
-    %\appendix
+    \appendix
+	\setcounter{secnumdepth}{0} % за счёт этого "Введение" будет без номера
+	\include{appendix_a}
+	\include{appendix_b}
     
 	
 \end{document}

@@ -3,7 +3,7 @@
 	
 	<!-- Connect menu item with event handler inside user code -->
 		<MenuItem id       = "Build"
-				  label    = "\$\{res:XML.MainMenu.BuildMenu.BuildSolution\}"
+				  label    = "${res:XML.MainMenu.BuildMenu.BuildSolution}"
 				  shortcut = "F8"
 				  icon     = "Icons.16x16.BuildCombine"
 				  class    = "IDEHostApplication.BuildProjectHandler"/> 
@@ -14,32 +14,32 @@
 												class="ICSharpCode.SharpDevelop.Project.Commands.AbortBuild"/>
 		<MenuItem id = "Separator3" type = "Separator" />
 		<MenuItem id = "SetConfiguration"
-				  label = "\$\{res:XML.MainMenu.BuildMenu.SetConfiguration\}"
+				  label = "${res:XML.MainMenu.BuildMenu.SetConfiguration}"
 				  type = "Menu">
 			<MenuItem id = "ConfigurationBuilder" 
 													type = "Builder"
 													class = "ICSharpCode.SharpDevelop.Project.Commands.SetConfigurationMenuBuilder"/>
 		</MenuItem>
 		<MenuItem id = "SetPlatform"
-				  label = "\$\{res:XML.MainMenu.BuildMenu.SetPlatform\}"
+				  label = "${res:XML.MainMenu.BuildMenu.SetPlatform}"
 				  type = "Menu">
 			<MenuItem id = "PlatformBuilder"
 													type = "Builder"
 													class = "ICSharpCode.SharpDevelop.Project.Commands.SetPlatformMenuBuilder"/>
 		</MenuItem>
 		<MenuItem id = "EditConfigurations"
-				  label = "\$\{res:XML.MainMenu.BuildMenu.EditConfigurationsPlatforms\}"
+				  label = "${res:XML.MainMenu.BuildMenu.EditConfigurationsPlatforms}"
 				  class = "ICSharpCode.SharpDevelop.Project.Commands.EditConfigurationsCommand"/>
 	</ComplexCondition>
 </MenuItem> <!-- end BUILD menu -->
 
-<MenuItem id = "Debug" label = "\$\{res:XML.MainMenu.DebugMenu\}" type="Menu">
+<MenuItem id = "Debug" label = "${res:XML.MainMenu.DebugMenu}" type="Menu">
 	<Condition name="DebuggerSupports" debuggersupports = "Start">
 		<Condition name = "SolutionOpen" action="Disable">
 			<Condition name="IsProcessRunning" isdebugging="False" action="Disable">
 			 <!-- Connect menu item with event handler inside user code -->
 				<MenuItem id       = "Run"
-						  label    = "\$\{res:XML.MainMenu.RunMenu.Run\}"
+						  label    = "${res:XML.MainMenu.RunMenu.Run}"
 						  icon     = "Icons.16x16.RunProgramIcon"
 						  shortcut = "F5"
 						  class = "IDEHostApplication.ExecuteHandler"/>
@@ -52,7 +52,7 @@
 		<Condition name = "SolutionOpen" action="Disable">
 			<Condition name="IsProcessRunning" isdebugging="False" action="Disable">
 				<MenuItem id       = "RunWithoutDebugger"
-						  label    = "\$\{res:XML.MainMenu.DebugMenu.RunWithoutDebug\}"
+						  label    = "${res:XML.MainMenu.DebugMenu.RunWithoutDebug}"
 						  icon     = "Icons.16x16.Debug.StartWithoutDebugging"
 						  shortcut = "Control|F5"
 						  class    = "ICSharpCode.SharpDevelop.Project.Commands.ExecuteWithoutDebugger"/>
@@ -64,7 +64,7 @@
 		<Condition name="IsProcessRunning" isdebugging="True" action="Disable">
 		 <!-- Connect menu item with event handler inside user code -->
 			<MenuItem id    = "Stop"
-					  label = "\$\{res:XML.MainMenu.DebugMenu.Stop\}"
+					  label = "${res:XML.MainMenu.DebugMenu.Stop}"
 					  icon  = "Icons.16x16.StopProcess"
 					  class = "IDEHostApplication.StopDebuggingCommandHandler"/>
 		</Condition>

@@ -1,6 +1,4 @@
- 
-<!-- ... -->
-	
+ <!-- ... -->
 	<!-- Connect menu item with event handler inside user code -->
 		<MenuItem id       = "Build"
 				  label    = "${res:XML.MainMenu.BuildMenu.BuildSolution}"
@@ -71,12 +69,10 @@
 	</Condition>
 
 	<!-- ... -->
-	
 	<!-- Add new button for invoking Event-Handler Signatures Generator -->
 			<ToolbarItem id      = "EventSignatureGen"
 			 icon    = "Icons.16x16.Event"
 			 tooltip = "Generate ITM event signatures"
 			 class = "IDEHostApplication.EventSignatureGenHandler"/> 
-
 	<!-- ... -->
 	
